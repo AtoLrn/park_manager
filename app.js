@@ -79,7 +79,7 @@ app.post('/register', async (req, res) => {
         }
     })
 
-    if (!existing) {
+    if (existing.length == 0) {
         const hash = await bcrypt.hash(password, 10).catch((_err) => {
             res.sendStatus(500)
         })
