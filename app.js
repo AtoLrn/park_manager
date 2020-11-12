@@ -55,9 +55,13 @@ app.get('/login', async (req, res) => {
 
     const profil = await User.findOne({
         where: { name }
+    }).catch((err) => {
+        res.sendStatus(500)
     })
     
-    const valid = await bcrypt.compare(password, profil.dataValues.password)
+    const valid = await bcrypt.compare(password, profil.dataValues.password).catch((err) => {
+        res.sendStatus(500)
+    })
 
     if (valid) {
         req.session.userId = profil.dataValues.id
