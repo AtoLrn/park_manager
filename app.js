@@ -23,8 +23,9 @@ app.get('/', (req, res) => {
 
 app.get('/parks', async (req, res) => {
     if (req.session.userId) {
+
         const availablePark = await Park.findAll({
-            where: { available: true, floor: req.query.floor},
+            where: { available: true, floor: req.query.floor },
             attributes: ['id', 'place_number']
         }).catch((err) => {
             res.sendStatus(500)
@@ -39,14 +40,7 @@ app.get('/parks', async (req, res) => {
     } else {
         res.sendStatus(403)
     }
-
-
 })
-
-
-
-
-
 
 
 app.get('/login', async (req, res) => {
@@ -78,18 +72,31 @@ app.get('/login', async (req, res) => {
 app.post('/register', async (req, res) => {
     const { name, email, password } = req.body
 
-    const hash = await bcrypt.hash(password, 10).catch((_err) => {
-        res.sendStatus(500)
-    })
-        
-    User.create({
-        name,
-        email,
-        password: hash,
-        admin: true
+
+    const existing = await User.findAll({
+        where: {
+            name
+        }
     })
 
-    res.send({result: 'success'})
+    if (!existing) {
+        const hash = await bcrypt.hash(password, 10).catch((_err) => {
+            res.sendStatus(500)
+        })
+            
+        User.create({
+            name,
+            email,
+            password: hash,
+            admin: true
+        })
+    
+        res.send({result: 'success'})
+    } else {
+        res.send({result: 'existing user'})
+    }
+
+
 })
 
 
@@ -99,6 +106,7 @@ app.post('/register', async (req, res) => {
 
 
 const port = process.env.PORT ? process.env.PORT : 3000
+
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
 })
