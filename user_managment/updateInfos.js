@@ -1,5 +1,5 @@
-const User = require('./../models/User')
-const Park = require('./../models/Park')
+const User = require('./../models/user')
+const Park = require('./../models/park')
 const noAuthResponse = require('./../authentification/noAuth')
 const bcrypt = require('bcrypt')
 
