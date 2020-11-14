@@ -1,41 +1,37 @@
 const { DataTypes, Model } = require('sequelize')
 const db = require('../db')
-const User = require('./user')
 
-class Park extends Model {}
+class User extends Model {}
 
-Park.init(
+User.init(
     {
         id: {
           type: DataTypes.INTEGER,
           primaryKey: true,
           autoIncrement: true,
         },
-        floor: {
-          type: DataTypes.INTEGER,
+        name: {
+          type: DataTypes.STRING,
           allowNull: false,
         },
-        place_number: {
-          type: DataTypes.INTEGER,
+        email: {
+          type: DataTypes.STRING,
           allowNull: false,
         },
-        available: {
+        password: {
+          type: DataTypes.STRING,
+          allowNull: false,
+        },
+        admin: {
           type: DataTypes.BOOLEAN,
           allowNull: false,
         },
-        used_by: {
-          type: DataTypes.INTEGER,
-        }
       },
       {
         sequelize: db,
-        modelName: 'Park',
-        tableName: 'parks',
+        modelName: 'User',
+        tableName: 'users',
       },
 )
 
-Park.belongsTo(User, {
-  foreignKey: 'used_by'
-})
-
-module.exports = Park
+module.exports = User
