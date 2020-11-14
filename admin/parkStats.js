@@ -1,5 +1,5 @@
 const Park = require('./../models/park')
-const User = require('./../models/User')
+const User = require('./../models/user')
 const { Op } = require('sequelize')
 
 const parkStats = async (req, res) => {
