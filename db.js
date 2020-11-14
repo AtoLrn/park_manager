@@ -7,6 +7,7 @@ const sequelize = new Sequelize(
     {
       host: 'ec2-34-246-141-162.eu-west-1.compute.amazonaws.com',
       dialect: 'postgres',
+      logging: false,
       dialectOptions: {
         ssl: {
           require: true,

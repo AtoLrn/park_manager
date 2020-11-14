@@ -22,6 +22,9 @@ Park.init(
           type: DataTypes.BOOLEAN,
           allowNull: false,
         },
+        used_by: {
+          type: DataTypes.INTEGER,
+        }
       },
       {
         sequelize: db,
