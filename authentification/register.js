@@ -1,8 +1,14 @@
 const User = require('./../models/user.js')
 const { Op } = require('sequelize')
 const bcrypt = require('bcrypt')
+const { checkParams, missingParams } = require('../checkParams.js')
 
 const Register = async (req, res) => {
+    const missing = checkParams(['name', 'email', 'password', 'admin'], req.body)
+    if ( missing.length > 0 ) {
+        return missingParams(res, missing)
+    }
+
     const { name, email, password, admin } = req.body
 
 

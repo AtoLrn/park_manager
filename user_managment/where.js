@@ -21,7 +21,7 @@ const where = async (req, res) => {
         }
     }
     else {
-        noAuthResponse(res)
+        return noAuthResponse(res)
     }
 }
 

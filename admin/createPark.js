@@ -1,8 +1,16 @@
 const Park = require('./../models/park')
-
+const { checkParams, missingParams } = require('../checkParams.js')
+const notAdmin = require('./noAdmin')
 
 const createPark = async (req, res) => {
     if (req.session.admin) {
+        const missing = checkParams(['place_number', 'floor', 'available'],req.body)
+
+        if ( missing.length > 0 ) {
+            return missingParams(res, missing)
+        }
+
+
         const { place_number, floor, available } = req.body
 
         const existing = await Park.findOne({
@@ -31,7 +39,7 @@ const createPark = async (req, res) => {
 
         
     } else {
-        res.sendStatus(403)
+        return notAdmin(res)
     }
 }
 

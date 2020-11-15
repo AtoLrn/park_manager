@@ -9,11 +9,12 @@ const findPark = require('./user_managment/findPark.js')
 const where = require('./user_managment/where.js')
 const quitPark = require('./user_managment/quitPark.js')
 const takePark = require('./user_managment/takePark.js')
+const updateInfos = require('./user_managment/updateInfos.js')
+const reserve = require('./user_managment/reserve.js')
 
 const createPark = require('./admin/createPark')
 const parkStats = require('./admin/parkStats')
-const updateInfos = require('./user_managment/updateInfos.js')
-const reserve = require('./user_managment/reserve.js')
+const removeCar = require('./admin/removeCar')
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
@@ -24,7 +25,7 @@ app.use(session({
     cookie: { 
         // eslint-disable-next-line no-undef
         secure: process.env.PORT ? true : false,
-        maxAge: 60000
+        maxAge: 120000
      }
   }))
 
@@ -50,6 +51,7 @@ app.post('/quitPark', quitPark)
 
 app.post('/createPark', createPark)
 app.get('/parkStats', parkStats)
+app.post('/removeCar', removeCar)
 
 // eslint-disable-next-line no-undef
 const port = process.env.PORT ? process.env.PORT : 3000

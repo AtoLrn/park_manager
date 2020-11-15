@@ -1,8 +1,15 @@
 const Park = require('./../models/park')
 const noAuthResponse = require('./../authentification/noAuth')
+const { checkParams, missingParams } = require('../checkParams.js')
 
 const reserve = async (req, res) => {
     if (req.session.userId) {
+        const missing = checkParams(['floor', 'place_number'], req.body)
+
+        if ( missing.length > 0 ) {
+            return missingParams(res, missing)
+        }
+
         const { floor, place_number } = req.body
 
         const place = await Park.findOne({
@@ -25,7 +32,7 @@ const reserve = async (req, res) => {
         }
 
     } else {
-        noAuthResponse(res)
+        return noAuthResponse(res)
     }
 }
 

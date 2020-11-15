@@ -1,7 +1,13 @@
 const User = require('./../models/user.js')
 const bcrypt = require('bcrypt')
+const { checkParams, missingParams } = require('../checkParams.js')
 
 const Login = async (req, res) => {
+
+    const missing = checkParams(['name', 'password'], req.body)
+    if (missing.length > 0) {
+        return missingParams(res, missing)
+    }
 
     const { name, password } = req.body
 
