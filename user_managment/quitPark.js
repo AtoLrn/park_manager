@@ -1,4 +1,5 @@
 const Park = require('./../models/park')
+const noAuthResponse = require('./../authentification/noAuth')
 
 const quitPark = async (req, res) => {
     if (req.session.userId) {
@@ -19,12 +20,13 @@ const quitPark = async (req, res) => {
                 floor: place.dataValues.floor
             }})
         } else {
-            res.sendStatus(418)
+            res.status(404)
+            res.send({ result: 'error', error: 'you are not find on any park'})
         }
         
 
     } else {
-        res.sendStatus(403)
+        noAuthResponse(res)
     }
 }
 

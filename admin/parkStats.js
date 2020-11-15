@@ -10,11 +10,10 @@ const parkStats = async (req, res) => {
                     used_by: null
                 }
             })
-    
-            
+
             res.status(200)
             res.send({ result: 'success', infos: { freePark: count, parks: rows.reduce((acc, park) => {
-                acc.push({ place_number: park.dataValues.place_number, floor: park.dataValues.floor })
+                acc.push({ place_number: park.dataValues.place_number, floor: park.dataValues.floor, freeSince:  park.dataValues.updated})
                 return acc
             }, [])}})
 
@@ -33,7 +32,8 @@ const parkStats = async (req, res) => {
 
             res.status(200)
             res.send({ result: 'success', infos: { freePark: count, parks: rows.reduce((acc, park) => {
-                acc.push({ place_number: park.dataValues.place_number, floor: park.dataValues.floor, user: { 
+                acc.push({ place_number: park.dataValues.place_number, floor: park.dataValues.floor, takenSince:  park.dataValues.updated,
+                    user: { 
                     name: park.dataValues.User.dataValues.name, 
                     mail: park.dataValues.User.dataValues.email
                 } })
