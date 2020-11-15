@@ -52,6 +52,9 @@ app.post('/createPark', createPark)
 app.get('/parkStats', parkStats)
 
 // eslint-disable-next-line no-undef
+console.log(process.env.DAMN)
+
+// eslint-disable-next-line no-undef
 const port = process.env.PORT ? process.env.PORT : 3000
 
 app.listen(port, () => {
